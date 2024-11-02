@@ -26,93 +26,93 @@
     </div>
 </template>
 <script>
-  export default {
+export default {
     name: 'SearchAutocomplete',
     props: {
-      items: {
-        type: Array,
-        required: false,
-        default: () => [],
-      },
-      isAsync: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
+        items: {
+            type: Array,
+            required: false,
+            default: () => [],
+        },
+        isAsync: {
+            type: Boolean,
+            required: false,
+            default: false,
+        },
     },
     data() {
-      return {
-        isOpen: false,
-        results: [],
-        search: '',
-        isLoading: false,
-        arrowCounter: -1,
-      };
+        return {
+            isOpen: false,
+            results: [],
+            search: '',
+            isLoading: false,
+            arrowCounter: -1,
+        };
     },
     watch: {
-      items: function (value, oldValue) {
-        if (value.length !== oldValue.length) {
-          this.results = value;
-          this.isLoading = false;
-        }
-      },
+        items: function (value, oldValue) {
+            if (value.length !== oldValue.length) {
+                this.results = value;
+                this.isLoading = false;
+            }
+        },
     },
     mounted() {
-      document.addEventListener('click', this.handleClickOutside)
+        document.addEventListener('click', this.handleClickOutside)
     },
     destroyed() {
-      document.removeEventListener('click', this.handleClickOutside)
+        document.removeEventListener('click', this.handleClickOutside)
     },
     methods: {
-      setResult(result) {
-        this.search = result;
-        this.isOpen = false;
-        this.$emit('selected', result)
-      },
-      filterResults() {
-        this.results = this.items.filter((item) => {
-          return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
-        });
-      },
-      onChange() {
-        this.$emit('input', this.search);
+        setResult(result) {
+            this.search = result;
+            this.isOpen = false;
+            this.$emit('selected', result)
+        },
+        filterResults() {
+            this.results = this.items.filter((item) => {
+                return item.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+            });
+        },
+        onChange() {
+            this.$emit('input', this.search);
 
-        if (this.isAsync) {
-          this.isLoading = true;
-        } else {
-          this.filterResults();
-          this.isOpen = true;
-        }
-      },
-      handleClickOutside(event) {
-        if (!this.$el.contains(event.target)) {
-          this.isOpen = false;
-          this.arrowCounter = -1;
-        }
-      },
-      onArrowDown() {
-        if (this.arrowCounter < this.results.length -1) {
-          this.arrowCounter = this.arrowCounter + 1;
-        } else {
-            this.arrowCounter = 0;
-        }
-      },
-      onArrowUp() {
-        if (this.arrowCounter > 0) {
-          this.arrowCounter = this.arrowCounter - 1;
-        } else {
-            this.arrowCounter = this.results.length - 1;
-        }
-      },
-      onEnter() {
-        this.search = this.results[this.arrowCounter];
-        this.isOpen = false;
-        this.arrowCounter = -1;
-      },
+            if (this.isAsync) {
+                this.isLoading = true;
+            } else {
+                this.filterResults();
+                this.isOpen = true;
+            }
+        },
+        handleClickOutside(event) {
+            if (!this.$el.contains(event.target)) {
+                this.isOpen = false;
+                this.arrowCounter = -1;
+            }
+        },
+        onArrowDown() {
+            if (this.arrowCounter < this.results.length - 1) {
+                this.arrowCounter = this.arrowCounter + 1;
+            } else {
+                this.arrowCounter = 0;
+            }
+        },
+        onArrowUp() {
+            if (this.arrowCounter > 0) {
+                this.arrowCounter = this.arrowCounter - 1;
+            } else {
+                this.arrowCounter = this.results.length - 1;
+            }
+        },
+        onEnter() {
+            this.search = this.results[this.arrowCounter];
+            this.isOpen = false;
+            this.arrowCounter = -1;
+        },
     },
-  };
-  </script>
-  <style>
+};
+</script>
+<style>
 @keyframes appearing {
     0% {
         opacity: 0%;
