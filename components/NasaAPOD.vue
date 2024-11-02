@@ -1,13 +1,13 @@
 <style>
 #apod {
     position: relative;
-    animation-duration: 3s;
+    animation-duration: 1.5s;
     animation-name: appearing, dropping;
     animation-iteration-count: 1;
 }
 
 .apod-text {
-    animation-duration: 3s;
+    animation-duration: 1.5s;
     animation-name: appearing;
     animation-iteration-count: 1;
 }
@@ -24,7 +24,7 @@
 
 @keyframes dropping {
     0% {
-        top: -100%
+        top: -20%
     }
 
     100% {
@@ -45,6 +45,4 @@
 </template>
 <script setup>
 const { data } = await useFetch(' https://api.nasa.gov/planetary/apod?api_key=Spgzaa3lIq49FPMzr3Tb5kiMQZRpqQ5tG0oG0ubC')
-const imgURL = data.url
-console.log(data)
 </script>
